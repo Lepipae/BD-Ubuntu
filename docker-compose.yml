@@ -1,0 +1,17 @@
+services:
+  BD:
+    image: mysql:8.0
+    container_name: Base_de_datos
+    environment:
+      MYSQL_ROOT_PASSWORD: alvsmr
+      MYSQL_DATABASE: MiBD
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: alvsmr
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
+volumes:
+  mysql_data:
+
