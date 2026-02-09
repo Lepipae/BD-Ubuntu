@@ -48,7 +48,47 @@ SELECT * FROM alumno WHERE NOT fechaNacimiento BETWEEN "2001-01-01" AND "2012-12
 -- 5.9 Muestra los alumnos que tengan como primer apellido ‘García’ o ‘González’
 SELECT * FROM alumno WHERE apellido1="García" OR apellido1="González";
 -- 5.10 Muestra los alumnos que no tengan como primer apellido ‘García’ o ‘González’
-SELECT * FROM alumno WHERE NOT apellido1="García" OR apellido1="González";
-
+SELECT * FROM alumno WHERE apellido1 NOT IN ("García", "González");
+-- 5.11 Muestra los alumnos cuyo nombre comience por ‘M’
+SELECT * FROM alumno WHERE nombre LIKE "M%";
+-- 5.12 Muestra los alumnos cuyo nombre contenga la ‘n’
+SELECT * FROM alumno WHERE nombre LIKE "%n%";
+-- 5.13 Muestra los alumnos cuyo nombre termine por ‘a’
+SELECT * FROM alumno WHERE nombre LIKE "%a";
+-- 5.14 Muestra los alumnos cuyo nombre tenga cinco caracteres
+SELECT * FROM alumno WHERE char_length(nombre) = 5;
+-- 5.15 Muestra los alumnos cuyo nombre NO comience por ‘M’
+SELECT * FROM alumno WHERE nombre NOT LIKE "M%";
+-- 5.16 Muestra los alumnos cuyo apellido2 no sea nulo
+SELECT * FROM alumno WHERE apellido2 IS NOT NULL;
+-- 5.17 Muestra los alumnos cuyo apellido2 sea nulo
+SELECT * FROM alumno WHERE apellido2 IS NULL;
+-- a. Mostrar el nif, el nombre y el apellido de los alumnos con código posta 28199 o 28190 o 28179
+-- y que no se llamen ni Lucas ni Antonio y que se apelliden ‘Pérex’;
+SELECT nif, nombre, apellido1 FROM alumno 
+WHERE codPostal IN ("28199", "28190", "28179") 
+AND nombre NOT IN ("Lucas", "Antonio") 
+AND apellido1 != "Pérex";
+-- b. Mostrar el nif, el nombre y el apellido de los alumnos con código postal distinto de 28199 pero sí
+-- 28109 y 28190 y cuyo nombre comience por L
+SELECT nif, nombre, apellido1 FROM alumno
+WHERE codPostal != 28199
+AND codPostal IN ("28109", "28190")
+AND nombre LIKE "L%";
+-- c. Mostrar el nif, el nombre y el apellido de los alumnos que en el teléfon contenga un 2 y el
+-- nombre sea Laura, Carmen o Manuel ordenados ascendentemente.
+SELECT nif, nombre, apellido1 FROM alumno
+WHERE telefono LIKE "%2%"
+AND nombre IN ("Laura", "Carmen", "Manuel")
+ORDER BY nombre ASC;
+-- d. Mostrar el nif, el nombre y el apellido de los alumnos con apellido García y cuyo nombre
+-- contenga una a. y termine en o.
+SELECT nif, nombre, apellido1 FROM alumno
+WHERE apellido1 = "García"
+AND nombre LIKE "%a%"
+AND nombre LIKE "%o";
+-- e. Mostrar el nif, el nombre y el apellido de los alumnos que no tengan segundo apellido.
+SELECT nif, nombre, apellido1 FROM alumno
+WHERE apellido2 IS NULL;
 
 
