@@ -36,3 +36,5 @@ INSERT INTO empleado VALUES(10, '46384486H', 'Diego','Flores', 'Salas', 5);
 INSERT INTO empleado VALUES(11, '67389283A', 'Marta','Herrera', 'Gil', 1);
 INSERT INTO empleado VALUES(12, '41234836R', 'Irene','Salas', 'Flores', NULL);
 INSERT INTO empleado VALUES(13, '82635162B', 'Juan Antonio','Sáez', 'Guerrero', NULL);
+SELECT * FROM departamento;
+SELECT * FROM empleado;

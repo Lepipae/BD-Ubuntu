@@ -10,7 +10,7 @@ id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 nombre VARCHAR(100) NOT NULL,
 precio DOUBLE NOT NULL,
 id_fabricante INT UNSIGNED NOT NULL,
-FOREIGN KEY (id_fabricante) REFERENCES fabricante(id)
+FOREIGN KEY (id_fabricante) REFERENCES fabricante(id) ON UPDATE CASCADE
 );
 INSERT INTO fabricante VALUES(1, 'Asus');
 INSERT INTO fabricante VALUES(2, 'Lenovo');
