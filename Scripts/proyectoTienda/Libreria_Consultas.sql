@@ -2,17 +2,21 @@ USE mydb;
 
 -- 1: Selección Simple con filtros
 -- Muestra el título y el precio de aquellos libros que cuestan más de 15 Euros.
-SELECT titulo, precio FROM Libro
-WHERE precio > 15;
+SELECT l.titulo, pr.Valor AS precio 
+FROM Libro l
+JOIN Precio pr ON l.idLibro = pr.idLibro
+WHERE pr.Valor > 15;
 
 -- 2: Búsqueda con LIKE
 -- Busca el nombre de los empleados que empiezan por la letra 'l'.
 SELECT nombre FROM Empleado
-WHERE nombre LIKE "l%";
+WHERE nombre LIKE 'l%';
 
 -- 3: Operadores Lógicos
 -- Calcula y muestra el precio con el IVA (21%) aplicado para todos los libros.
-SELECT (precio * 1.21) AS precio_iva FROM Libro;
+SELECT l.titulo, (pr.Valor * 1.21) AS precio_iva 
+FROM Libro l
+JOIN Precio pr ON l.idLibro = pr.idLibro;
 
 -- 4: Agregación Básica
 -- Devuelve el salario más alto de todos los empleados.
@@ -34,9 +38,9 @@ HAVING idEditorial = 1;
 SELECT DISTINCT nombre FROM Empleado;
 
 -- 8: Gestión de NULL
--- Extrae los pedidos que tienen algún método de pago asignado.
-SELECT * FROM Pedido
-WHERE metodoPago IS NOT NULL;
+-- Extrae los empleados que tienen un jefe asignado
+SELECT * FROM Empleado
+WHERE Supervisa IS NOT NULL;
 
 -- 9: Subconsulta Simple con IN
 -- Selecciona todas las editoriales que tienen asociado al menos un libro.
@@ -83,11 +87,16 @@ JOIN Libro l ON l.idEditorial = e.idEditorial
 GROUP BY e.nombre;
 
 -- 17: JOIN con Condiciones Complejas
--- Busca los libros (título y precio) publicados por la 'Casa del Libro' que cuesten entre 15 y 20.
-SELECT l.titulo, l.precio FROM Libro l
+-- Busca los libros (título, precio, nombre del proveedor y tienda) publicados por la 'Casa del Libro' que cuesten entre 15 y 20 y en el que el proveedor es Logista Libros.
+SELECT l.titulo, pr.Valor AS precio, p.nombre AS proveedor, lib.localizacion 
+FROM Libro l
 JOIN Editorial e ON e.idEditorial = l.idEditorial
+JOIN Proveedor p ON l.idProveedor = p.idProveedor
+JOIN Libreria lib ON lib.idLibreria = l.idLibreria
+JOIN Precio pr ON l.idLibro = pr.idLibro
 WHERE e.nombre = 'Casa del Libro' 
-AND l.precio BETWEEN 15 AND 20;
+  AND pr.Valor BETWEEN 15 AND 20
+  AND p.nombre = 'Logista Libros';
 
 -- 18: JOIN con Subconsultas
 -- Muestra la información del cliente y la suma del total de todos los pedidos que ha hecho con una subtabla.
@@ -126,13 +135,15 @@ FROM Cliente c
 LEFT JOIN Pedido p ON c.idCliente = p.idCliente AND p.total > 15
 WHERE c.email LIKE '%@gmail.com%';
 
+
 -- 22: Subconsulta en WHERE
 -- Extrae los títulos, precios y stock de aquellos libros cuyo coste supera la media del precio de todos los libros.
-SELECT titulo, precio, stock
-FROM Libro
-WHERE precio > (
-    SELECT AVG(precio) 
-    FROM Libro
+SELECT l.titulo, pr.Valor AS precio, l.stock
+FROM Libro l
+JOIN Precio pr ON l.idLibro = pr.idLibro
+WHERE pr.Valor > (
+    SELECT AVG(Valor) 
+    FROM Precio
 );
 
 -- 23: Subconsulta con IN
@@ -197,12 +208,14 @@ WHERE salario > ALL (
 
 -- 29: Subconsulta con ANY/SOME
 -- Obtiene los títulos y precios de los libros cuyo precio es más barato que al menos uno de los libros de William Shakespeare.
-SELECT titulo, precio
-FROM Libro
-WHERE precio < ANY (
-    SELECT l.precio
-    FROM Libro l
-    JOIN Autor a ON l.idAutor = a.idAutor
+SELECT l.titulo, pr.Valor AS precio
+FROM Libro l
+JOIN Precio pr ON l.idLibro = pr.idLibro
+WHERE pr.Valor < ANY (
+    SELECT pr2.Valor
+    FROM Libro l2
+    JOIN Autor a ON l2.idAutor = a.idAutor
+    JOIN Precio pr2 ON l2.idLibro = pr2.idLibro
     WHERE a.nombre = 'William' AND a.apellidos = 'Shakespeare'
 );
 
