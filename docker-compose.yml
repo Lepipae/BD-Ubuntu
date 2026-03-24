@@ -1,16 +1,25 @@
 services:
-  BD:
-    image: mysql:8.0
-    container_name: Base_de_datos
-    environment:
-      MYSQL_ROOT_PASSWORD: alvsmr
-      MYSQL_DATABASE: MiBD
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: alvsmr
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
+    BD:
+        image: mysql:8.0
+        container_name: BD
+        environment:
+            MYSQL_ROOT_PASSWORD: alvsmr
+            MYSQL_DATABASE: MiBD
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: alvsmr
+        ports:
+            - "3306:3306"
+        volumes:
+            - mysql_data:/var/lib/mysql
+
+    adminer:
+        image: adminer:latest
+        container_name: Adminer_Interfaz
+        restart: always
+        ports:
+            - "8080:8080"
+        depends_on:
+            - BD
 
 volumes:
   mysql_data:
