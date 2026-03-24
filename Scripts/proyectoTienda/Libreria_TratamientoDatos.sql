@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS Empleado (
   nombre VARCHAR(45) NOT NULL,
   apellidos VARCHAR(45) NOT NULL,
   cargo VARCHAR(45) NOT NULL,
-  salario INT NOT NULL,
+  salario DOUBLE NOT NULL,
   fechaContratacion DATE NOT NULL,
   Supervisa INT NULL, 
   PRIMARY KEY (idEmpleado),
@@ -133,7 +133,7 @@ DROP TABLE IF EXISTS Pedido;
 CREATE TABLE IF NOT EXISTS Pedido (
   idPedido INT NOT NULL AUTO_INCREMENT,
   fechaPedido DATE NOT NULL,
-  total INT NOT NULL,
+  total DOUBLE NOT NULL,
   metodoPago VARCHAR(45) NOT NULL,
   idCliente INT NOT NULL,
   PRIMARY KEY (idPedido),
@@ -149,7 +149,7 @@ DROP TABLE IF EXISTS Factura;
 CREATE TABLE IF NOT EXISTS Factura (
   idFactura INT NOT NULL AUTO_INCREMENT,
   fechaEmision DATE NOT NULL,
-  importeTotal INT NOT NULL,
+  importeTotal DOUBLE NOT NULL,
   metodoPago VARCHAR(45) NOT NULL,
   idPedido INT NOT NULL,
   PRIMARY KEY (idFactura),
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS Factura (
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS Precio;
 CREATE TABLE IF NOT EXISTS Precio (
-  Valor INT NOT NULL,
+  Valor DOUBLE NOT NULL,
   idLibro INT NOT NULL,
   PRIMARY KEY (idLibro),
   CONSTRAINT fk_Precio_Libro1
