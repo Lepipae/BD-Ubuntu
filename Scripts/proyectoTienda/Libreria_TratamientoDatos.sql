@@ -5,9 +5,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Esquema mydb
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS mydb;
-CREATE SCHEMA IF NOT EXISTS mydb DEFAULT CHARACTER SET utf8;
-USE mydb;
+DROP SCHEMA IF EXISTS libreriaASDE;
+CREATE SCHEMA IF NOT EXISTS libreriaASDE DEFAULT CHARACTER SET utf8;
+USE libreriaASDE;
 
 -- -----------------------------------------------------
 -- Tabla Empleado

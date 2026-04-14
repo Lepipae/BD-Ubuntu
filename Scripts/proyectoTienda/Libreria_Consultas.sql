@@ -1,5 +1,4 @@
-USE mydb;
-
+USE libreriaASDE;
 -- 1: Selección Simple con filtros
 -- Muestra el título y el precio de aquellos libros que cuestan más de 15 Euros.
 SELECT l.titulo, pr.Valor AS precio 
